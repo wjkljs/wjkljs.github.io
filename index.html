@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>梁静诗 | 个人简历</title>
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- 鼠标跟随光斑 -->
+    <div id="mouse-light"></div>
+    <!-- 粒子动画画布 -->
+    <canvas id="particles"></canvas>
+
+    <!-- 顶部悬浮导航栏 -->
+    <nav class="navbar">
+        <div class="logo">梁静诗 · 个人主页</div>
+        <div style="display:flex;align-items:center;">
+            <ul class="nav-links">
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#education">教育</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <!-- 主题切换按钮 -->
+            <button class="theme-btn" id="themeBtn">🌙</button>
+        </div>
+    </nav>
+
+    <div class="layout">
+        <!-- 主内容区 -->
+        <div class="main">
+            <!-- 头部横幅卡片 -->
+            <header class="card hero-card">
+                <span class="hero-blob hero-blob-1"></span>
+                <span class="hero-blob hero-blob-2"></span>
+                <div class="hero-content">
+                    <img class="avatar" src="OIP-C.jpg" alt="梁静诗" />
+                    <h2 class="hero-name">梁静诗</h2>
+                    <p class="hero-sub">大模型应用开发班｜AI 应用探索者</p>
+                    <div class="hero-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">大模型 API 调用</span>
+                        <span class="skill-tag">提示词工程</span>
+                        <span class="skill-tag">网页开发</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 个人简介 -->
+            <section id="about" class="card">
+                <h2>个人简介</h2>
+                <p>
+                    大模型应用开发专业在读女生，对 AI 应用落地、智能对话、网页交互有较强兴趣。
+                    熟悉 Python 基础、大模型 API 调用、提示词工程、简单智能体搭建，以及 HTML / CSS / JavaScript 网页开发。
+                    希望在 AI 应用开发、前端开发、AI 测试或技术支持岗位中实践成长。
+                </p>
+            </section>
+
+            <!-- 项目经历 -->
+            <section id="projects" class="card">
+                <h2>项目经历</h2>
+                <div class="item">
+                    <div class="item-title">网页版个人简历</div>
+                    <div class="item-sub">技术栈：HTML + CSS + GitHub Pages</div>
+                    <ul>
+                        <li>独立完成响应式简历网页，适配电脑和手机端浏览</li>
+                        <li>使用 Git 进行版本管理，并通过 GitHub Pages 部署上线</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <div class="item-title">大模型简易智能体应用</div>
+                    <div class="item-sub">技术栈：Python + LLM API + OneAPI</div>
+                    <ul>
+                        <li>完成提示词设计、多轮对话逻辑和简单工具调用流程</li>
+                        <li>在 Trae 平台进行调试，整理输入输出示例与测试记录</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <div class="item-title">AI 对话小助手页面</div>
+                    <div class="item-sub">技术栈：HTML / CSS / JavaScript + 大模型接口</div>
+                    <ul>
+                        <li>设计简洁的聊天界面，实现用户输入与模型回复展示</li>
+                        <li>加入 loading 状态、消息气泡和基础交互反馈</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 教育背景 -->
+            <section id="education" class="card">
+                <h2>教育背景</h2>
+                <div class="item">
+                    <div class="item-title">人工智能应用与技术专业｜大专</div>
+                    <div class="item-sub">在读期间专注于 AI 应用开发、Python 编程、Web 前端与大模型平台实践</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 信息栏 -->
+        <div class="sidebar">
+            <!-- 技能栈 -->
+            <section id="skills" class="card">
+                <h2>技能栈</h2>
+                <div>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">大模型 API 调用</span>
+                    <span class="skill-tag">提示词工程</span>
+                    <span class="skill-tag">智能体搭建</span>
+                    <span class="skill-tag">HTML / CSS</span>
+                    <span class="skill-tag">JavaScript 基础</span>
+                    <span class="skill-tag">Git / GitHub</span>
+                    <span class="skill-tag">OneAPI</span>
+                    <span class="skill-tag">Trae 平台</span>
+                    <span class="skill-tag">软件测试基础</span>
+                </div>
+            </section>
+
+            <!-- 联系方式 -->
+            <section id="contact" class="card">
+                <h2>联系方式</h2>
+                <ul class="contact-list">
+                    <li><a href="mailto:3236297245@qq.com">📩 邮箱：3236297245@qq.com</a></li>
+                    <li><a href="tel:15919225961">📱 电话：159-1922-5961</a></li>
+                    <li><a href="https://github.com/wjkljs" target="_blank">💻 GitHub：wjkljs</a></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-top">↑</button>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        © 2026 梁静诗 · 网页简历 · 持续更新中
+    </div>
+
+    <!-- 交互脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>

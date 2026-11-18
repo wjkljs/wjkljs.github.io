@@ -1,0 +1,537 @@
+/* ============================================
+   梁静诗 · 个人简历
+   全部样式：变量、布局、卡片、导航、动画、响应式
+   ============================================ */
+
+/* ---------- 全局重置 ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ---------- 浅色主题变量 ---------- */
+:root {
+    --text-color: #333;
+    --card-bg: rgba(255, 255, 255, 0.78);
+    --nav-bg: rgba(255, 255, 255, 0.72);
+    --nav-scrolled: rgba(255, 255, 255, 0.86);
+    --border-color: rgba(201, 184, 232, 0.4);
+    --border-light: rgba(255, 255, 255, 0.6);
+    --footer-border: rgba(228, 217, 245, 0.35);
+    --main-purple: #7b5bb8;
+    --sub-purple: #8872b8;
+    --light-purple: #b8a3e3;
+    --pink: #ffd1e8;
+    --tag-bg: linear-gradient(135deg, #ede7f9, #ffeef7);
+    --tag-text: #6b4cad;
+    --item-title: #4b3578;
+    --gray-text: #777;
+    --link-text: #555;
+    --backtop-bg: rgba(255,255,255,0.75);
+}
+
+/* ---------- 深色主题变量 ---------- */
+[data-theme="dark"] {
+    --text-color: #e9e5f4;
+    --card-bg: rgba(36, 28, 58, 0.75);
+    --nav-bg: rgba(30, 24, 48, 0.75);
+    --nav-scrolled: rgba(26, 20, 42, 0.85);
+    --border-color: rgba(184, 163, 227, 0.25);
+    --border-light: rgba(70, 55, 105, 0.45);
+    --footer-border: rgba(184, 163, 227, 0.22);
+    --main-purple: #c2adf0;
+    --sub-purple: #b39cd8;
+    --light-purple: #b8a3e3;
+    --pink: #ffc6e0;
+    --tag-bg: linear-gradient(135deg, #44356b, #5c3b5c);
+    --tag-text: #e1d7f7;
+    --item-title: #d4c2f5;
+    --gray-text: #b4a7d6;
+    --link-text: #cac2e0;
+    --backtop-bg: rgba(42, 33, 70, 0.75);
+}
+
+/* ---------- 页面背景 ---------- */
+body {
+    min-height: 100vh;
+    color: var(--text-color);
+    line-height: 1.7;
+    padding-top: 80px;
+    position: relative;
+    overflow-x: hidden;
+
+    background-image:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(237, 230, 255, 0.65)),
+        url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: color 0.3s, background 0.3s;
+}
+
+/* 深色模式下的背景渐变 */
+[data-theme="dark"] body {
+    background-image:
+        linear-gradient(135deg, rgba(16,12,32,0.65), rgba(28, 20, 48, 0.75)),
+        url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80");
+}
+
+/* ---------- 鼠标跟随光斑 ---------- */
+#mouse-light {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 184, 232, 0.35), rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+}
+
+/* ---------- 粒子画布 ---------- */
+#particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ---------- 顶部悬浮导航栏 ---------- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(122, 91, 184, 0.12);
+    transition: all 0.3s ease;
+}
+
+/* 滚动后导航栏加深 */
+.navbar.scrolled {
+    background: var(--nav-scrolled);
+    box-shadow: 0 6px 24px rgba(122, 91, 184, 0.18);
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--main-purple);
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--link-text);
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s;
+    position: relative;
+    padding: 6px 2px;
+}
+
+/* 当前激活导航高亮 */
+.nav-links a.active {
+    color: var(--main-purple);
+}
+.nav-links a.active::after {
+    width: 100%;
+}
+.nav-links a:hover {
+    color: var(--main-purple);
+}
+
+/* 导航链接下划线动效 */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--light-purple), var(--pink));
+    transition: width 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* ---------- 主题切换按钮 ---------- */
+.theme-btn {
+    margin-left: 20px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--main-purple);
+    font-size: 18px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+.theme-btn:hover {
+    transform: scale(1.12);
+}
+
+/* ---------- 布局容器（单列） ---------- */
+.layout {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+/* 左侧主内容 */
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* 信息栏（单列布局下顺序排列） */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* ---------- 通用卡片 ---------- */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(18px);
+    border-radius: 40px;
+    padding: 30px;
+    box-shadow: 0 12px 30px rgba(122, 91, 184, 0.18);
+    border: 1px solid var(--border-light);
+    transition: transform 0.7s ease, opacity 0.7s ease, box-shadow 0.4s ease;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* 卡片顶部彩色装饰条 */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--main-purple), var(--light-purple), var(--pink));
+    opacity: 0.7;
+}
+
+/* ---------- 卡片入场动画（配合 script.js 的 IntersectionObserver） ----------
+   仅在 JS 可用时（html.js）才初始隐藏，无 JS 时卡片直接可见 */
+.js .card {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.js .card.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+.js .card.revealed:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(122, 91, 184, 0.28);
+}
+/* 头部横幅卡片入场后不参与 hover 上移 */
+.js .hero-card.revealed:hover {
+    transform: none;
+    box-shadow: 0 12px 30px rgba(122, 91, 184, 0.18);
+}
+
+/* ---------- 头部横幅卡片 ---------- */
+.hero-card {
+    text-align: center;
+    padding: 50px 30px 30px;
+    position: relative;
+}
+
+/* 头部卡片漂浮光斑装饰 */
+.hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+.hero-blob-1 {
+    width: 200px;
+    height: 200px;
+    background: var(--light-purple);
+    top: -40px;
+    right: -40px;
+    animation: blobFloat 8s ease-in-out infinite;
+}
+.hero-blob-2 {
+    width: 160px;
+    height: 160px;
+    background: var(--pink);
+    bottom: -40px;
+    left: -30px;
+    animation: blobFloat 10s ease-in-out infinite reverse;
+}
+
+@keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(20px, -20px) scale(1.1); }
+}
+
+.hero-name {
+    font-size: 28px;
+    color: var(--main-purple);
+    margin: 14px 0 6px;
+    /* 继承全局 h2 的 display:flex，flex 容器用 justify-content 居中 */
+    justify-content: center;
+}
+.hero-name::before {
+    display: none;             /* 去掉标题左侧装饰条 */
+}
+
+.hero-sub {
+    color: var(--sub-purple);
+    font-size: 15px;
+    margin-bottom: 18px;
+}
+
+.hero-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.hero-tags .skill-tag {
+    margin: 0;
+}
+
+/* Hero 内容区抬到光斑之上 */
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border: 4px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+        0 0 0 4px var(--light-purple),
+        0 10px 24px rgba(122, 91, 184, 0.35);
+    margin: 0 auto 16px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    animation: avatarSpin 6s linear infinite;
+}
+
+/* 人像照片不做 360° 旋转，只放大 */
+.avatar:hover {
+    transform: scale(1.08);
+}
+
+/* 头像光晕呼吸动画（保留外圈描边环） */
+@keyframes avatarSpin {
+    from { box-shadow: 0 0 0 4px var(--light-purple), 0 10px 24px rgba(122, 91, 184, 0.35); }
+    to   { box-shadow: 0 0 0 4px var(--pink),          0 10px 30px rgba(255, 209, 232, 0.6); }
+}
+
+/* ---------- 标题通用 ---------- */
+h2 {
+    color: var(--main-purple);
+    margin-bottom: 14px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 标题左侧渐变装饰条 */
+h2::before {
+    content: "";
+    width: 6px;
+    height: 22px;
+    background: linear-gradient(180deg, var(--light-purple), var(--pink));
+    border-radius: 3px;
+}
+
+/* ---------- 技能标签 ---------- */
+.skill-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 6px 14px;
+    border-radius: 99px;
+    margin: 6px 8px 6px 0;
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+}
+
+.skill-tag:hover {
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 0 12px 24px rgba(122, 91, 184, 0.25);
+}
+
+/* ---------- 列表项 ---------- */
+.item {
+    margin-bottom: 18px;
+    transition: transform 0.3s ease;
+}
+
+.item:hover {
+    transform: translateX(6px);
+}
+
+.item:last-child {
+    margin-bottom: 0;
+}
+
+.item-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--item-title);
+}
+
+.item-sub {
+    color: var(--gray-text);
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+ul {
+    padding-left: 22px;
+    margin-top: 10px;
+}
+
+li {
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+}
+
+li:hover {
+    color: var(--main-purple);
+    transform: translateX(4px);
+}
+
+/* ---------- 联系信息 ---------- */
+.contact-list {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-list li {
+    margin-bottom: 10px;
+}
+
+.contact-list a {
+    color: var(--link-text);
+    text-decoration: none;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact-list a:hover {
+    color: var(--main-purple);
+    transform: translateX(4px);
+}
+
+/* ---------- 返回顶部按钮 ---------- */
+.back-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--backtop-bg);
+    backdrop-filter: blur(12px);
+    color: var(--main-purple);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 6px 16px rgba(122,91,184,0.15);
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 998;
+}
+
+/* 滚动超过阈值时显示 */
+.back-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-top:hover {
+    transform: translateY(-5px);
+    background: var(--card-bg);
+}
+
+/* ---------- 页脚 ---------- */
+.footer {
+    text-align: center;
+    color: var(--light-purple);
+    font-size: 13px;
+    margin-top: 30px;
+    padding: 14px;
+    border-top: 1px solid var(--footer-border);
+    position: relative;
+    z-index: 2;
+}
+
+/* ---------- 响应式布局 ---------- */
+@media (max-width: 900px) {
+    /* 移动端不支持 background-attachment: fixed，避免滚动卡顿 */
+    body {
+        background-attachment: scroll;
+    }
+    .navbar {
+        padding: 0 16px;
+    }
+    .nav-links {
+        gap: 12px;
+    }
+    .logo {
+        font-size: 17px;
+    }
+    .hero-card {
+        padding: 40px 20px 24px;
+    }
+    .layout {
+        padding: 20px 14px;
+    }
+}
